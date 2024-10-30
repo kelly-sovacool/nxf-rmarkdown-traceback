@@ -18,8 +18,9 @@ options(error = function() {
 
 ## original stdout/err files
 
-### `.command.err`
+### original err
 
+`.command.err`
 ```
 processing file: notebook.parameterised.Rmd
 to_error: TRUE ( logical )
@@ -29,8 +30,9 @@ Calls: <Anonymous> ... withCallingHandlers -> withVisible -> eval -> eval -> thr
 Execution halted
 ```
 
-### `.command.out`
+### original out
 
+`.command.out`
 ```r
   |                                                                            
   |                                                                      |   0%
@@ -51,8 +53,9 @@ label: error
 
 ## traceback with improved error option
 
-### `.command.err`
+### improved err
 
+`.command.err`
 ```
 processing file: notebook.parameterised.Rmd
 to_error: TRUE ( logical )
@@ -63,8 +66,9 @@ Warning message:
 In sink() : no sink to remove
 ```
 
-### `.command.out`
+### improved out
 
+`.command.out`
 ```
   |                                                                            
   |                                                                      |   0%
@@ -84,4 +88,59 @@ label: error
  1. └─global::throw_error(params$to_error)
  2.   └─global::func(to_error)
  3.     └─base::stop("ERROR")
+```
+
+## versions matter??
+
+The [desired helpful traceback](#improved-out) is shown when using the default container from nf-core rmarkdownnotebook, which has the following versions:
+
+```
+rmarkdown: 2.9
+knitr: 1.33
+rlang: 0.4.11
+```
+
+However, when using newer versions of these packages:
+```
+rmarkdown: rmarkdown: 2.28
+knitr: 1.48
+rlang: 1.1.4
+```
+
+a more verbose and unhelpful message is shown:
+
+### verbose out
+
+`.command.out`
+```
+1/4        
+2/4 [setup]
+3/4        
+4/4 [error]
+     ▆
+  1. ├─rmarkdown::render(...)
+  2. │ └─knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
+  3. │   └─knitr:::process_file(text, output)
+  4. │     ├─xfun:::handle_error(...)
+  5. │     ├─base::withCallingHandlers(...)
+  6. │     └─knitr:::process_group(group)
+  7. │       └─knitr:::call_block(x)
+  8. │         └─knitr:::block_exec(params)
+  9. │           └─knitr:::eng_r(options)
+ 10. │             ├─knitr:::in_input_dir(...)
+ 11. │             │ └─knitr:::in_dir(input_dir(), expr)
+ 12. │             └─knitr (local) evaluate(...)
+ 13. │               └─evaluate::evaluate(...)
+ 14. │                 └─base::withRestarts(...)
+ 15. │                   └─base (local) withRestartList(expr, restarts)
+ 16. │                     └─base (local) withOneRestart(withRestartList(expr, restarts[-nr]), restarts[[nr]])
+ 17. │                       └─base (local) docall(restart$handler, restartArgs)
+ 18. │                         ├─base::do.call("fun", lapply(args, enquote))
+ 19. │                         └─evaluate (local) fun(base::quote(`<smplErrr>`))
+ 20. │                           └─base::signalCondition(cnd)
+ 21. └─knitr (local) `<fn>`(`<smplErrr>`)
+ 22.   └─rlang::entrace(e)
+ 23.     └─rlang::cnd_signal(entraced)
+ 24.       └─rlang:::signal_abort(cnd)
+ 25.         └─base::stop(fallback)
 ```
