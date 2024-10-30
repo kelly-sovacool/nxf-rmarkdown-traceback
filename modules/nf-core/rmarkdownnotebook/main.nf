@@ -129,12 +129,16 @@ process RMARKDOWNNOTEBOOK {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        rmarkdown: \$(Rscript -e "cat(paste(packageVersion('rmarkdown'), collapse='.'))")
+        rmarkdown: \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
     END_VERSIONS
     """
 
     stub:
     """
     touch notebook.html session_info.log versions.yml
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        rmarkdown: \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
+    END_VERSIONS
     """
 }
