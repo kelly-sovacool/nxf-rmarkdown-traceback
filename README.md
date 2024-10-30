@@ -4,7 +4,7 @@
 nextflow run main.nf -profile docker
 ```
 
-`.command.out` & `.command.err` files from the work dir of failed job can be improved by adding the following code to the Rscript just before calling `rmarkdown::render`:
+`.command.out` & `.command.err` files from the work dir of failed job can be improved by adding the following code at the top of the R Markdown file:
 
 ```r
 options(rlang_trace_top_env = rlang::current_env())
@@ -80,27 +80,8 @@ label: setup
   |                                                                            
   |......................................................................| 100%
 label: error
-     █
-  1. └─rmarkdown::render(...)
-  2.   └─knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
-  3.     └─knitr:::process_file(text, output)
-  4.       ├─base::withCallingHandlers(...)
-  5.       ├─knitr:::process_group(group)
-  6.       └─knitr:::process_group.block(group)
-  7.         └─knitr:::call_block(x)
-  8.           └─knitr:::block_exec(params)
-  9.             └─knitr:::eng_r(options)
- 10.               ├─knitr:::in_dir(...)
- 11.               └─knitr:::evaluate(...)
- 12.                 └─evaluate::evaluate(...)
- 13.                   └─evaluate:::evaluate_call(...)
- 14.                     ├─evaluate:::timing_fn(...)
- 15.                     ├─base:::handle(...)
- 16.                     ├─base::withCallingHandlers(...)
- 17.                     ├─base::withVisible(eval(expr, envir, enclos))
- 18.                     └─base::eval(expr, envir, enclos)
- 19.                       └─base::eval(expr, envir, enclos)
- 20.                         └─global::throw_error(params$to_error)
- 21.                           └─global::func(to_error)
- 22.                             └─base::stop("ERROR")
+    █
+ 1. └─global::throw_error(params$to_error)
+ 2.   └─global::func(to_error)
+ 3.     └─base::stop("ERROR")
 ```

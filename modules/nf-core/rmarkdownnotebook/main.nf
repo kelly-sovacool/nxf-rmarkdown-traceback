@@ -123,11 +123,6 @@ process RMARKDOWNNOTEBOOK {
 
     # Render notebook
     Rscript - <<EOF
-        options(rlang_trace_top_env = rlang::current_env())
-        options(error = function() {
-            sink()
-            print(rlang::trace_back(bottom = sys.frame(-1)), simplify = "none")
-        })
         ${indent_code_block(render_cmd, 8)}
         writeLines(capture.output(sessionInfo()), "session_info.log")
     EOF
