@@ -1,0 +1,18 @@
+---
+title: "example notebook"
+output:
+    html_document
+params:
+    to_error: true
+    src: 'functions.R'
+---
+
+```{r setup}
+knitr::opts_chunk$set(message = FALSE)
+source(params$src)
+```
+
+```{r error}
+message(paste("to_error:", params$to_error, "(", class(params$to_error), ")"))
+throw_error(params$to_error)
+```

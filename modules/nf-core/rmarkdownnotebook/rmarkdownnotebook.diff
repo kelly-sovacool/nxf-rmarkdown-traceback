@@ -1,0 +1,27 @@
+Changes in module 'nf-core/rmarkdownnotebook'
+--- modules/nf-core/rmarkdownnotebook/main.nf
++++ modules/nf-core/rmarkdownnotebook/main.nf
+@@ -123,6 +123,11 @@
+ 
+     # Render notebook
+     Rscript - <<EOF
++        options(rlang_trace_top_env = rlang::current_env())
++        options(error = function() {
++            sink()
++            print(rlang::trace_back(bottom = sys.frame(-1)), simplify = "none")
++        })
+         ${indent_code_block(render_cmd, 8)}
+         writeLines(capture.output(sessionInfo()), "session_info.log")
+     EOF
+@@ -132,4 +137,9 @@
+         rmarkdown: \$(Rscript -e "cat(paste(packageVersion('rmarkdown'), collapse='.'))")
+     END_VERSIONS
+     """
++
++    stub:
++    """
++    touch notebook.html session_info.log versions.yml
++    """
+ }
+
+************************************************************
