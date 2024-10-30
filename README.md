@@ -95,6 +95,7 @@ label: error
 The [desired helpful traceback](#improved-out) is shown when using the default container from nf-core rmarkdownnotebook, which has the following versions:
 
 ```
+R: 4.1.0
 rmarkdown: 2.9
 knitr: 1.33
 rlang: 0.4.11
@@ -102,7 +103,8 @@ rlang: 0.4.11
 
 However, when using newer versions of these packages:
 ```
-rmarkdown: rmarkdown: 2.28
+R: 4.4.1
+rmarkdown: 2.28
 knitr: 1.48
 rlang: 1.1.4
 ```
