@@ -129,7 +129,8 @@ process RMARKDOWNNOTEBOOK {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        rmarkdown: \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
+        R: \$(R --version | head -n 1 | sed 's/.* version //' | sed 's/ (.*//')
+        \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
     END_VERSIONS
     """
 
@@ -138,7 +139,8 @@ process RMARKDOWNNOTEBOOK {
     touch notebook.html session_info.log versions.yml
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        rmarkdown: \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
+        R: \$(R --version | head -n 1 | sed 's/.* version //' | sed 's/ (.*//')
+        \$(Rscript -e "cat(paste(lapply(c('rmarkdown','knitr','rlang'), function(x) paste0(x,': ',paste( packageVersion(x), collapse = '.'))), collapse = '\\n    '))")
     END_VERSIONS
     """
 }

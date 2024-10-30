@@ -4,17 +4,25 @@ output:
     html_document
 params:
     to_error: true
-    src: 'functions.R'
+    set_rlang_error: true
 ---
 
 ```{r setup}
+knitr::opts_chunk$set(message = FALSE)
+throw_error <- function(to_error) {
+    func(to_error)
+}
+func <- function(to_error) {
+    if (to_error) stop('ERROR')
+}
+```
+
+```{r set_rlang_error, eval=params$set_rlang_error}
 options(rlang_trace_top_env = rlang::current_env())
 options(error = function() {
     sink()
     print(rlang::trace_back(bottom = sys.frame(-1)), simplify = "none")
 })
-knitr::opts_chunk$set(message = FALSE)
-source(params$src)
 ```
 
 ```{r error}
