@@ -144,3 +144,76 @@ a more verbose and unhelpful message is shown:
  24.       └─rlang:::signal_abort(cnd)
  25.         └─base::stop(fallback)
 ```
+
+This also occurs without nextflow as long as the newer versions are installed, just calling rmarkdown from a terminal:
+
+`R -e 'rmarkdown::render("notebook.Rmd")'`
+```
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20.0.0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> rmarkdown::render("notebook.Rmd")
+
+
+processing file: notebook.Rmd
+  |..............................................................| 100% [error]Error in `func()`:
+! ERROR
+Backtrace:
+  1. rmarkdown::render("notebook.Rmd")
+  2. knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
+  3. knitr:::process_file(text, output)
+  6. knitr:::process_group(group)
+  7. knitr:::call_block(x)
+     ...
+ 14. base::withRestarts(...)
+ 15. base (local) withRestartList(expr, restarts)
+ 16. base (local) withOneRestart(withRestartList(expr, restarts[-nr]), restarts[[nr]])
+ 17. base (local) docall(restart$handler, restartArgs)
+ 19. evaluate (local) fun(base::quote(`<smplErrr>`))
+     ▆
+  1. ├─rmarkdown::render("notebook.Rmd")
+  2. │ └─knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
+  3. │   └─knitr:::process_file(text, output)
+  4. │     ├─xfun:::handle_error(...)
+  5. │     ├─base::withCallingHandlers(...)
+  6. │     └─knitr:::process_group(group)
+  7. │       └─knitr:::call_block(x)
+  8. │         └─knitr:::block_exec(params)
+  9. │           └─knitr:::eng_r(options)
+ 10. │             ├─knitr:::in_input_dir(...)
+ 11. │             │ └─knitr:::in_dir(input_dir(), expr)
+ 12. │             └─knitr (local) evaluate(...)
+ 13. │               └─evaluate::evaluate(...)
+ 14. │                 └─base::withRestarts(...)
+ 15. │                   └─base (local) withRestartList(expr, restarts)
+ 16. │                     └─base (local) withOneRestart(withRestartList(expr, restarts[-nr]), restarts[[nr]])
+ 17. │                       └─base (local) docall(restart$handler, restartArgs)
+ 18. │                         ├─base::do.call("fun", lapply(args, enquote))
+ 19. │                         └─evaluate (local) fun(base::quote(`<smplErrr>`))
+ 20. │                           └─base::signalCondition(cnd)
+ 21. └─knitr (local) `<fn>`(`<smplErrr>`)
+ 22.   └─rlang::entrace(e)
+ 23.     └─rlang::cnd_signal(entraced)
+ 24.       └─rlang:::signal_abort(cnd)
+ 25.         └─base::stop(fallback)
+
+Quitting from lines 21-23 [error] (notebook.Rmd)
+                                                                                                  
+> 
+> 
+```
