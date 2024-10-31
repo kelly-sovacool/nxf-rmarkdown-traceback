@@ -219,3 +219,8 @@ Quitting from lines 21-23 [error] (notebook.Rmd)
 > 
 > 
 ```
+
+## see also
+
+- stack overflow question: <https://stackoverflow.com/questions/79143394/improving-the-r-traceback-when-rendering-r-markdown-non-interactively>
+- issue in Adv R: <https://github.com/hadley/adv-r/issues/1792>
