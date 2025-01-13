@@ -225,3 +225,6 @@ Quitting from lines 21-23 [error] (notebook.Rmd)
 - stack overflow question: <https://stackoverflow.com/questions/79143394/improving-the-r-traceback-when-rendering-r-markdown-non-interactively>
 - issue in Adv R: <https://github.com/hadley/adv-r/issues/1792>
 - bsky thread: <https://bsky.app/profile/kelly.sova.cool/post/3l7sqn6y4xm2y>
+- relevant PRs:
+  - <https://github.com/r-lib/evaluate/pull/232>
+  - <https://github.com/r-lib/rlang/pull/1769>   
