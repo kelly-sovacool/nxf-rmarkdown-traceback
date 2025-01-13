@@ -4,7 +4,6 @@ output:
     html_document
 params:
     to_error: true
-    src: 'functions.R'
 ---
 
 ```{r setup}
@@ -14,10 +13,15 @@ options(error = function() {
     print(rlang::trace_back(bottom = sys.frame(-1)), simplify = "none")
 })
 knitr::opts_chunk$set(message = FALSE)
-source(params$src)
 ```
 
 ```{r error}
+throw_error <- function(to_error) {
+    func(to_error)
+}
+func <- function(to_error) {
+    if (to_error) stop('ERROR')
+}
 message(paste("to_error:", params$to_error, "(", class(params$to_error), ")"))
 throw_error(params$to_error)
 ```
