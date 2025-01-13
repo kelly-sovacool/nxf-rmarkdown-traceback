@@ -220,6 +220,35 @@ Quitting from lines 21-23 [error] (notebook.Rmd)
 > 
 ```
 
+## SOLUTION
+
+It turns out, there was a bug in evaluate. It has been fixed as of v1.0.2.
+
+New behavior with evaluate >=1.0.2:
+```
+processing file: notebook.Rmd
+  |..............................................................| 100% [error]Error in `func()`:
+! ERROR
+Backtrace:
+ 1. global throw_error(params$to_error)
+ 2. global func(to_error)
+    ▆
+ 1. ├─global throw_error(params$to_error)
+ 2. │ └─global func(to_error)
+ 3. │   └─base::stop("ERROR")
+ 4. └─base::.handleSimpleError(`<fn>`, "ERROR", base::quote(func(to_error)))
+ 5.   └─knitr (local) h(simpleError(msg, call))
+ 6.     └─rlang::entrace(e)
+ 7.       └─rlang::cnd_signal(entraced)
+ 8.         └─rlang:::signal_abort(cnd)
+ 9.           └─base::stop(fallback)
+
+Quitting from lines 19-27 [error] (notebook.Rmd)
+```
+
+The posit devs also [plan](https://bsky.app/profile/hadley.nz/post/3lfho5bm5ak27)
+to cut a new release of [rlang](https://github.com/r-lib/rlang/pull/1769) which will yield the desired backtrace tree without needing to set any options.
+
 ## see also
 
 - stack overflow question: <https://stackoverflow.com/questions/79143394/improving-the-r-traceback-when-rendering-r-markdown-non-interactively>
